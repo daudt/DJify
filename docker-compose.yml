@@ -1,0 +1,10 @@
+version: '2'
+services:
+  api:
+    build: .
+    command: bundle exec unicorn -c config/unicorn.rb
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/motherboard-api
+
