@@ -4,7 +4,7 @@
   var wrapper = player.querySelector("#wrap");
 
   triggerMouseEvent = function(node, eventType) {
-    var clickEvent = player.createEvent ('MouseEvents');
+    var clickEvent = player.createEvent('MouseEvent');
     clickEvent.initEvent(eventType, true, true);
     node.dispatchEvent(clickEvent);
   }
@@ -39,5 +39,24 @@
 
   this.addInjectedStuffs(player);
 
+  // get bounding client rect
+  // get x-y coordinate
+
+
 })();
 
+
+triggerMouseEvent = function(node, eventType) {
+  var clickEvent = document.createEvent('MouseEvents');
+  clickEvent.initEvent(eventType, true, true);
+  node.dispatchEvent(clickEvent);
+}
+
+setSomeValues = function() {
+  document.getElementById("bar-inner").setAttribute("style", "width: 100px");
+  document.getElementById("position").setAttribute("style", "left: 94px");
+  document.getElementById("time-marker-arrow").setAttribute("style", "left: 101px");
+  document.getElementById("track-current").textContent = "1:20";
+  triggerMouseEvent(document.getElementById("position"), "mousedown");
+  triggerMouseEvent(document.getElementById("position"), "mouseup");
+}
