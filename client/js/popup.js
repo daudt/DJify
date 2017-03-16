@@ -1,7 +1,8 @@
 window.onload = function() {
-  var theButton = document.querySelector("button");
-  theButton.addEventListener('click', function(e) {
-    var socket = chrome.extension.getBackgroundPage().socket;
-    socket.emit('hello', {data: true, stupid: false});
+  var connectButton = document.querySelector('#room-connect'),
+      roomName = document.querySelector('#room-name')
+  connectButton.addEventListener('click', function(e) {
+    var bg = chrome.extension.getBackgroundPage();
+    bg.connect();
   });
 };

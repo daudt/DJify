@@ -5,22 +5,11 @@
 // 	});
 // });
 
-var socket = io("http://127.0.0.1:3000");
+var socketServer = "http://127.0.0.1:3000"
+var socket;
 var tabIDToUse = 0;
 
-socket.on('open', function(e) {
-	chrome.tabs.update(tabIDToUse, {url: "https://open.spotify.com/track/30vh2LXU2A9ccd0rgFYHpd?play=true", autoDiscardable: false, active: true}, function(e) {
-		console.log('Page is loaded');
-	});
-});
 
-socket.on('pause', function(data) {
-	console.log('I got the pause command, and some stupid data: '+ data);
-});
-
-socket.on('connect', function(e) {
-	setTabToUse();
-});
 
 function setTabToUse() {
 	chrome.tabs.query({url: "https://*.spotify.com/*"}, function(tabResults){
@@ -31,5 +20,23 @@ function setTabToUse() {
 				tabIDToUse = result.id;
 			});
 		}
+	});
+}
+ 
+function connect(roomName) {
+	socket = io(socketServer);
+
+	socket.on('open', function(e) {
+		chrome.tabs.update(tabIDToUse, {url: "https://open.spotify.com/track/30vh2LXU2A9ccd0rgFYHpd?play=true", autoDiscardable: false, active: true}, function(e) {
+			console.log('Page is loaded');
+		});
+	});
+
+	socket.on('pause', function(data) {
+		console.log('I got the pause command, and some stupid data: '+ data);
+	});
+
+	socket.on('connect', function(e) {
+		setTabToUse();
 	});
 }
