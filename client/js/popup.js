@@ -3,6 +3,6 @@ window.onload = function() {
       roomName = document.querySelector('#room-name')
   connectButton.addEventListener('click', function(e) {
     var bg = chrome.extension.getBackgroundPage();
-    bg.connect();
+    bg.connect(roomName.value);
   });
 };

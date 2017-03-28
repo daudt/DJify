@@ -9,8 +9,6 @@ var socketServer = "http://127.0.0.1:3000"
 var socket;
 var tabIDToUse = 0;
 
-
-
 function setTabToUse() {
 	chrome.tabs.query({url: "https://*.spotify.com/*"}, function(tabResults){
 		if(tabResults.length > 0) {
@@ -26,9 +24,9 @@ function setTabToUse() {
 function connect(roomName) {
 	socket = io(socketServer);
 
-	socket.on('open', function(e) {
+	socket.on('open', function(data) {
 		chrome.tabs.update(tabIDToUse, {url: "https://open.spotify.com/track/30vh2LXU2A9ccd0rgFYHpd?play=true", autoDiscardable: false, active: true}, function(e) {
-			console.log('Page is loaded');
+			socket.emit('getIndex');
 		});
 	});
 
@@ -38,5 +36,6 @@ function connect(roomName) {
 
 	socket.on('connect', function(e) {
 		setTabToUse();
+		socket.emit('joinRoom', {newRoom: roomName});
 	});
 }
